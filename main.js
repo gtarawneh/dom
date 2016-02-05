@@ -8,22 +8,37 @@ window.onload = function () {
 
 }
 
+
+
 // global vars
 
 var nodeArr = [], edgeArr = [];
-var nodeMap = {}; // maps node name to node object
 var nodes, edges, nodeLabels, force, svg;
 
 // functions
+
+function onWindowResize() {
+
+    var w = $('#svg1').width();
+    var h = $('#svg1').height();
+
+    force.size([w, h]);
+
+}
 
 function drawGraph() {
 
     var w = 400, h = w;
 
     force = d3.layout.force().nodes(nodeArr).links(edgeArr).size([w, h])
-                    .linkDistance([150]).charge([-500]).start();
+                    .linkDistance([50]).charge([-500]).start();
 
-    svg = d3.select("#grapharea").append("svg").attr("width", w).attr("height", h);
+    svg = d3.select("#grapharea").append("svg").attr("width", "100%").attr("height", "100%").attr("id", "svg1");
+
+    $(window).resize(onWindowResize);
+
+    onWindowResize();
+
     edges = svg.selectAll("line").data(edgeArr);
     nodes = svg.selectAll("circle").data(nodeArr);
     nodeLabels = svg.selectAll("text").data(nodeArr);
@@ -46,60 +61,51 @@ function onForceTick() {
     nodes.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
 
-    nodeLabels.text(function (d) { return d.name.substring(1, d.name.length-1); })
+    nodeLabels.text(function (d) { return d.name; })
        .attr("x", function(d) { return d.x; })
        .attr("y", function(d) { return d.y - 20; });
 
  }
 
+ function getRegexMatches(txt, re) {
 
-function addNode(nodeName) {
+     var matches = [];
 
-    nodeObj = {name: nodeName};
+     var m;
 
-    nodeArr.push(nodeObj);
+     while ((m = re.exec(txt)) !== null) {
 
-    nodeMap[nodeName] = nodeObj;
+         if (m.index === re.lastIndex) re.lastIndex++;
 
-}
+         matches.push(m[0]);
 
+     }
+
+     return matches;
+
+ }
 
 function onTextChange() {
 
     var txt = $('#writingarea').val();
 
-    var result = "";
+    var nodeMatches = getRegexMatches(txt, /\[[a-zA-Z]+\]/g);
 
-    var re = /\[[a-zA-Z]+\]/g;
-
-    var m;
-
-    var newNodes = [];
-
-    while ((m = re.exec(txt)) !== null) {
-
-        if (m.index === re.lastIndex) re.lastIndex++;
-
-        result = result + m ;
-
-        newNodes.push(m[0]);
-
-    }
+    var newNodes = nodeMatches.map(function (el) {
+        return el.substring(1, el.length-1)});
 
     // remove any deleted nodes:
 
     // loop through nodeArr (backwards), any nodes which do not exist in
     // newNodes must have been removed
 
-    var anyChanges = false;
-
     for (var i=nodeArr.length-1; i>=0; i--) {
 
         if (newNodes.indexOf(nodeArr[i].name) == -1) {
 
-            nodeArr.splice(i, 1);
+            console.log('removed node: ' + nodeArr[i].name);
 
-            anyChanges = true;
+            nodeArr.splice(i, 1);
         }
 
     }
@@ -116,15 +122,51 @@ function onTextChange() {
 
     nodeNamesToAdd.map(function (el) {
         nodeArr.push({name: el});
-        anyChanges = true;
+        console.log('added node: ' + el);
     });
 
-    $('#console1').text(result);
+    // scan for edges
 
-    if (anyChanges) updateSVG();
+    // first, update nodeNameArr to reflect any changes made above
+
+    nodeNameArr = nodeArr.map(function (el) { return el.name;});
+
+    // second, parse for edge specifications
+
+    var newEdges = getRegexMatches(txt, /\[[a-zA-Z]+-[a-zA-Z]+\]/g);
+
+    // lastly, re-populate edgeArr ...
+
+    edgeArr.splice(0, edgeArr.length);
+
+    newEdges.map(function (el) {
+
+        var p = parseEdgeStr(el);
+        var srcInd = nodeNameArr.indexOf(p.source);
+        var tgtInd = nodeNameArr.indexOf(p.target);
+
+        if (srcInd != -1 && tgtInd != -1) {
+
+            edgeArr.push({source: srcInd, target: tgtInd});
+
+        }
+
+    });
+
+    updateSVG();
 
 }
 
+function parseEdgeStr(str) {
+
+    var k = str.indexOf('-');
+
+    var s = str.substring(1, k);
+    var d = str.substring(k+1, str.length-1);
+
+    return {source: s, target: d};
+
+}
 
 function updateSVG() {
 

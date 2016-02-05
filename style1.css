@@ -1,23 +1,25 @@
 body {
-  padding: 50px;
+    padding: 50px;
+
 }
 
 h1 {
-  font-family: Lora;
+    font-family: Lora;
 }
 
 #writingarea {
-  width:100%;
-  height: 30%;
-  border: none;
-  font-family: Lora;
-  font-size: 24px;
-  outline: none;
-  box-shadow: none;
-  color: black;
-  padding: 0px;
+    width:100%;
+    height: 67.5%;
+    border: none;
+    font-family: Lora;
+    font-size: 24px;
+    outline: none;
+    box-shadow: none;
+    color: black;
+    padding: 0px;
+    resize: none;
 }
 
 .half_panel {
-  width: 50%;
+    width: 100%;
 }
