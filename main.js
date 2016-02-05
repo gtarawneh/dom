@@ -31,7 +31,7 @@ function drawGraph() {
     var w = 400, h = w;
 
     force = d3.layout.force().nodes(nodeArr).links(edgeArr).size([w, h])
-                    .linkDistance([50]).charge([-500]).start();
+                    .linkDistance([75]).charge([-500]).start();
 
     svg = d3.select("#grapharea").append("svg").attr("width", "100%").attr("height", "100%").attr("id", "svg1");
 
@@ -150,6 +150,40 @@ function onTextChange() {
             edgeArr.push({source: srcInd, target: tgtInd});
 
         }
+
+    });
+
+    // parse sentences
+
+    var sentences = getRegexMatches(txt, /\b[a-zA-Z\s\',\-:()–]+[.?!]/g);
+
+    sentences.map(function (sen) {
+
+        // find which node namess are contained in this sentence
+
+        var senNodeIndices = [];
+
+        for (var i=0; i<nodeNameArr.length; i++) {
+
+            if (sen.toLowerCase().indexOf(nodeNameArr[i]) > -1) {
+
+                senNodeIndices.push(i);
+
+            }
+
+        }
+
+        // adding edges between nodes whose indices are in `senNodeIndices`
+
+        senNodeIndices.map(function (ind1) {
+
+            senNodeIndices.map(function (ind2) {
+
+                edgeArr.push({source: ind1, target: ind2});
+
+            });
+
+        });
 
     });
 
