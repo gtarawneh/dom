@@ -11,8 +11,8 @@ var tutorial = [
 {msg: 'For example [ww] and [ww-yy] [ww-zz] [yy-zz].\r\r', delay: 5000},
 {msg: 'However, the tool is also able to extract edge declarations from natural language text.\r\r', delay: 5000},
 {msg: 'Any sentence that contains two node names is an implicit edge declaration. ', delay: 5000},
-{msg: 'For example ...\r\r', delay: 2000},
-{msg: '[apples][trees][humans] Humans eat apples. Apples grow on trees.\r\r', delay: 3000},
+{msg: 'For example, using the nodes [apples][trees][humans] we can write ...\r\r', delay: 2000},
+{msg: 'Humans eat apples. Apples grow on trees.\r\r', delay: 3000},
 {msg: 'This is the end of the tutorial. Try editing this text or starting with a new one. Graph nodes can be dragged around using the mouse if you wish to re-arrange your graphs :-)', delay: 0},
 ];
 
