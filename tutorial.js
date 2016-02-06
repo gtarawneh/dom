@@ -5,7 +5,7 @@ var tutorial = [
 {msg: '[xx]', delay: 500},
 {msg: '[yy]', delay: 500},
 {msg: '[zz]\r\r', delay: 4000},
-{msg: 'As you type in the editor the tool will automatically parse your input and update the graph in real-time.\r\r', delay: 5000},
+{msg: 'As you type in the editor the tool will parse your input and update the graph in real-time.\r\r', delay: 5000},
 {msg: 'Edges can be declared explicitly using the format [xx-yy]\r\r', delay: 5000},
 {msg: 'Node and edge declarations can occur anywhere within text. ', delay: 3000},
 {msg: 'For example [ww] and [ww-yy] [ww-zz] [yy-zz].\r\r', delay: 5000},

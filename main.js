@@ -87,8 +87,14 @@ function onTextChange() {
 
     var nodeMatches = getRegexMatches(txt, /\[[a-zA-Z]+\]/g);
 
-    var newNodes = nodeMatches.map(function (el) {
+    var newNodesAll = nodeMatches.map(function (el) {
         return el.substring(1, el.length-1).toLowerCase()});
+
+    // keep unique values (NB this is a poor way of doing it, will work for now)
+
+    var newNodes = newNodesAll.filter(function (el, pos) {
+        return pos == newNodesAll.indexOf(el);
+    })
 
     // remove any deleted nodes:
 
