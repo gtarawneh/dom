@@ -1,14 +1,10 @@
 window.onload = function () {
 
-  //$("#writingarea").css("color", "red");
-
   $("#writingarea").focus();
 
   drawGraph();
 
 }
-
-
 
 // global vars
 
@@ -92,7 +88,7 @@ function onTextChange() {
     var nodeMatches = getRegexMatches(txt, /\[[a-zA-Z]+\]/g);
 
     var newNodes = nodeMatches.map(function (el) {
-        return el.substring(1, el.length-1)});
+        return el.substring(1, el.length-1).toLowerCase()});
 
     // remove any deleted nodes:
 

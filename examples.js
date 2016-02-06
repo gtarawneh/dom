@@ -1,0 +1,12 @@
+var example1 = '[assumption1][philosophy][mind][computation][carbon][argument][thesis][cognition][learning][human][neural][computer][independence][brain][functionalism][turing]\r\rA common assumption in the philosophy of mind is that of substrate-independence. The idea is that mental states can supervene on any of a broad class of physical substrates. Provided a system implements the right sort of computational structures and processes, it can be associated with conscious experiences. It is not an essential property of consciousness that it is implemented on carbon-based biological neural networks inside a cranium: silicon-based processors inside a computer could in principle do the trick as well.\rArguments for this thesis have been given in the literature, and although it is not entirely uncontroversial, we shall here take it as a given.\rThe argument we shall present does not, however, depend on any very strong version of functionalism or computationalism. For example, we need not assume that the thesis of substrate-independence is necessarily true (either analytically or metaphysically) - just that, in fact, a computer running a suitable program would be conscious. Moreover, we need not assume that in order to create a mind on a computer it would be sufficient to program it in such a way that it behaves like a human in all situations, including passing the Turing test etc. We need only the weaker assumption that it would suffice for the generation of subjective experiences that the computational processes of a human brain are structurally replicated in suitably fine-grained detail, such as on the level of individual synapses. This attenuated version of substrate-independence is quite widely accepted.\rNeurotransmitters, nerve growth factors, and other chemicals that are smaller than a synapse clearly play a role in human cognition and learning. The substrate-independence thesis is not that the effects of these chemicals are small or irrelevant, but rather that they affect subjective experience only via their direct or indirect influence on computational activities. For example, if there can be no difference in subjective experience without there also being a difference in synaptic discharges, then the requisite detail of simulation is at the synaptic level (or higher).\r\rsource: http://www.simulation-argument.com/simulation.html';
+
+function ex1() {
+
+    if (!tutorialOn) {
+
+        $('#writingarea').val(example1);
+
+        onTextChange();
+
+    }
+}
