@@ -236,4 +236,10 @@ function updateSVG() {
 
     force.start();
 
+    // reorder svg elements so that lines are first (and thus at bottom depth)
+
+    var svgLines = $('#svg1>line').detach();
+
+    svgLines.prependTo('#svg1');
+
 }
