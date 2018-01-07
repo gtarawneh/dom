@@ -81,14 +81,37 @@ function onForceTick() {
 
  }
 
+ function getRegexMatchesGroups(txt, re) {
+
+    var matches = [];
+
+    var m;
+
+    while ((m = re.exec(txt)) !== null) {
+
+        if (m.index === re.lastIndex) re.lastIndex++;
+
+        matches.push(m);
+
+    }
+
+    return matches;
+
+ }
+
 function onTextChange() {
 
-    var txt = $('#writingarea').val();
+    const txt = $('#writingarea').val();
 
-    var nodeMatches = getRegexMatches(txt, /\[[a-zA-Z]+\]/g);
+    var labelDefs = {};  // name -> label
+
+    const nodeMatches = getRegexMatchesGroups(txt, /\[([a-zA-Z]+)(:([^\].]+))?\]/g);
 
     var newNodesAll = nodeMatches.map(function (el) {
-        return el.substring(1, el.length-1).toLowerCase()});
+        var nodeName = el[3] || el[1];
+        labelDefs[el[1]] = nodeName;
+        return nodeName;
+    });
 
     // keep unique values (NB this is a poor way of doing it, will work for now)
 
@@ -144,8 +167,10 @@ function onTextChange() {
     newEdges.map(function (el) {
 
         var p = parseEdgeStr(el);
-        var srcInd = nodeNameArr.indexOf(p.source);
-        var tgtInd = nodeNameArr.indexOf(p.target);
+        const node1 = labelDefs[p.source];
+        const node2 = labelDefs[p.target];
+        var srcInd = nodeNameArr.indexOf(node1);
+        var tgtInd = nodeNameArr.indexOf(node2);
 
         if (srcInd != -1 && tgtInd != -1) {
 
