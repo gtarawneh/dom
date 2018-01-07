@@ -27,7 +27,7 @@ function drawGraph() {
     var w = 400, h = w;
 
     force = d3.layout.force().nodes(nodeArr).links(edgeArr).size([w, h])
-                    .linkDistance([75]).charge([-500]).start();
+                    .linkDistance([100]).charge([-750]).start();
 
     svg = d3.select("#grapharea").append("svg").attr("width", "100%").attr("height", "100%").attr("id", "svg1");
 
